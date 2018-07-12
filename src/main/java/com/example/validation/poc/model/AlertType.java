@@ -13,7 +13,6 @@ import lombok.Data;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 @Data
-@NotBlank
 public class AlertType  {
 
     @NotBlank(message = "Mandatory field 'consumerApplicationId' is missing")

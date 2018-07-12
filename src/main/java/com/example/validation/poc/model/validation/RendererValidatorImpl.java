@@ -8,6 +8,7 @@ import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import lombok.Data;
 import org.apache.commons.collections4.CollectionUtils;
+import org.springframework.util.StringUtils;
 
 @Data
 public class RendererValidatorImpl implements ConstraintValidator<RendererValidator, List<Renderer>> {
@@ -21,13 +22,13 @@ public class RendererValidatorImpl implements ConstraintValidator<RendererValida
 
   @Override
   public boolean isValid(List<Renderer> renderers, ConstraintValidatorContext context) {
-    context.disableDefaultConstraintViolation();
     if (CollectionUtils.isNotEmpty(renderers)) {
       return renderers.stream()
-          .filter(renderer -> renderer.getRendererId().isEmpty())
+          .filter(renderer -> StringUtils.isEmpty(renderer.getRendererId()))
           .collect(Collectors.toList())
           .isEmpty();
     } else {
+      context.disableDefaultConstraintViolation();
       addConstraintWithMessage(context, "List of renderers should be not empty");
       return false;
     }
